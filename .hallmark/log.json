@@ -1,6 +1,15 @@
 [
   {
     "date": "2026-07-24",
+    "macrostructure": "retained Narrative Workflow",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "existing E5 local cover and contact-sheet system",
+    "brief": "Dedicated immersive Wrapped mode",
+    "scope": "Wrapped shell, six story chapters, edge navigation, responsive near-9:16 presentation"
+  },
+  {
+    "date": "2026-07-24",
     "macrostructure": "retained Split Studio / Ecosystem Index / Narrative Workflow",
     "theme": "custom",
     "theme_axes": "dark / roman-serif / playlist-specific accent",

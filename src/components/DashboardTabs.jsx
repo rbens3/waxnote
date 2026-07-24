@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { GENRE_COLORS } from "../theme.js";
 import {
   HEATMAP, DAYS_SHORT, SKIP_RATES, COMPLETIONIST, LABELS,
@@ -743,19 +743,29 @@ function WrappedArtwork({playlist,chapter}) {
   );
 }
 
-export function TabWrapped({playlist}) {
+export function TabWrapped({playlist,onExit}) {
   const [chapter,setChapter]=useState(0);
+  const storyRef=useRef(null);
   const touchStart=useRef(null);
   const {personality,cards}=playlist.analytics.wrapped;
   const current=cards[chapter];
   const isProfile=current.stat===personality.type;
   const progress=((chapter + 1) / cards.length) * 100;
 
+  useLayoutEffect(()=>{
+    storyRef.current?.focus({preventScroll:true});
+  },[]);
+
   const showChapter=(next)=>{
     setChapter(Math.max(0,Math.min(cards.length - 1,next)));
   };
 
   const handleKeyDown=(event)=>{
+    if(event.key==="Escape") {
+      event.preventDefault();
+      onExit();
+      return;
+    }
     if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key)) return;
     event.preventDefault();
     if(event.key==="ArrowLeft") showChapter(chapter - 1);
@@ -775,14 +785,30 @@ export function TabWrapped({playlist}) {
   return(
     <article
       className="wrapped-story"
+      ref={storyRef}
       aria-label={`${playlist.name} Wrapped story`}
+      aria-keyshortcuts="ArrowLeft ArrowRight Home End Escape"
       onKeyDown={handleKeyDown}
       onTouchStart={event=>{touchStart.current=event.changedTouches[0].clientX;}}
       onTouchEnd={handleTouchEnd}
       tabIndex="0"
     >
       <header className="wrapped-story__masthead">
-        <p className="metadata">{playlist.name} · Wrapped</p>
+        <p className="wrapped-story__identity">
+          <strong>{playlist.name}</strong>
+          <span>Wrapped</span>
+        </p>
+        <p className="wrapped-story__count metadata">
+          {String(chapter + 1).padStart(2,"0")} / {String(cards.length).padStart(2,"0")}
+        </p>
+        <button
+          className="wrapped-exit"
+          type="button"
+          aria-keyshortcuts="Escape"
+          onClick={onExit}
+        >
+          Exit Wrapped <span aria-hidden="true">↗</span>
+        </button>
         <div
           className="wrapped-progress"
           role="progressbar"
@@ -794,7 +820,6 @@ export function TabWrapped({playlist}) {
         >
           <span/>
         </div>
-        <p className="metadata">{String(chapter + 1).padStart(2,"0")} / {String(cards.length).padStart(2,"0")}</p>
       </header>
 
       <section
@@ -804,8 +829,13 @@ export function TabWrapped({playlist}) {
         aria-live="polite"
       >
         <div className="wrapped-chapter__copy">
-          <p className="wrapped-chapter__index metadata">Chapter {String(chapter + 1).padStart(2,"0")}</p>
-          <p className="wrapped-chapter__stat" data-long={current.stat.length>12}>{current.stat}</p>
+          <p
+            className="wrapped-chapter__stat"
+            data-long={current.stat.length>12}
+            data-nowrap={!current.stat.includes(" ")}
+          >
+            {current.stat}
+          </p>
           <h1 id="wrapped-chapter-title">{current.label}</h1>
           <p className="wrapped-chapter__sub metadata">{current.sub}</p>
           <p className="wrapped-chapter__caption">{current.caption}</p>
@@ -836,7 +866,7 @@ export function TabWrapped({playlist}) {
             type="button"
             aria-describedby="wrapped-share-note"
           >
-            Share chapter <span aria-hidden="true">↗</span>
+            Share prototype <span aria-hidden="true">↗</span>
           </button>
           <button
             className="wrapped-control wrapped-control--next"
@@ -846,7 +876,9 @@ export function TabWrapped({playlist}) {
           >
             Next <span aria-hidden="true">→</span>
           </button>
-          <p id="wrapped-share-note">Prototype preview · image export is not connected</p>
+          <p className="visually-hidden" id="wrapped-share-note">
+            Image export is not connected in this prototype.
+          </p>
         </footer>
       </section>
     </article>
