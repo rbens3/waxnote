@@ -1,0 +1,56 @@
+[
+  {
+    "date": "2026-07-24",
+    "macrostructure": "retained Split Studio / Ecosystem Index / Narrative Workflow",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "unchanged E5 cover system plus Tier-A code-native sonic soundprint",
+    "brief": "Focused density and data-visualization refinement",
+    "scope": "catalog ranking disclosure, overview genre DNA and growth figure, persistent playlist preview"
+  },
+  {
+    "date": "2026-07-24",
+    "macrostructure": "retained Split Studio / Ecosystem Index / Narrative Workflow",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "existing E5 cover system plus Tier-A code-native sonic soundprint",
+    "brief": "Focused Editorial Music Intelligence desktop-polish pass",
+    "scope": "dashboard shell, overview genre DNA, catalog ranking, audio hero, history opening"
+  },
+  {
+    "date": "2026-07-23",
+    "macrostructure": "Narrative Workflow",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "existing E5 tier-B cover system",
+    "brief": "Phase 2C Editorial Music Intelligence redesign",
+    "scope": "history and wrapped"
+  },
+  {
+    "date": "2026-07-23",
+    "macrostructure": "Ecosystem Index",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "existing E5 tier-B cover system",
+    "brief": "Phase 2B Editorial Music Intelligence redesign",
+    "scope": "catalog and audio"
+  },
+  {
+    "date": "2026-07-23",
+    "macrostructure": "existing app shell (unchanged)",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / cool-violet",
+    "enrichment": "none",
+    "brief": "Phase 1 Editorial Music Intelligence visual system",
+    "scope": "app"
+  },
+  {
+    "date": "2026-07-23",
+    "macrostructure": "Split Studio",
+    "theme": "custom",
+    "theme_axes": "dark / roman-serif / playlist-specific accent",
+    "enrichment": "E5 tier-B hand-built SVG cover series",
+    "brief": "Phase 2A Editorial Music Intelligence structural redesign",
+    "scope": "login, playlist selection, dashboard shell, overview, now-playing"
+  }
+]

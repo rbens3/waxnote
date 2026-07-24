@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img">
+  <title>This Is Bennett abstract archive cover</title>
+  <rect width="800" height="800" fill="#171319"/>
+  <rect x="34" y="34" width="352" height="352" fill="#a978ee"/>
+  <rect x="414" y="34" width="352" height="162" fill="#efe7d7"/>
+  <rect x="414" y="224" width="162" height="162" fill="#e87662"/>
+  <rect x="604" y="224" width="162" height="162" fill="#33293f"/>
+  <rect x="34" y="414" width="162" height="352" fill="#efe7d7"/>
+  <rect x="224" y="414" width="352" height="162" fill="#33293f"/>
+  <rect x="224" y="604" width="162" height="162" fill="#e87662"/>
+  <rect x="414" y="604" width="352" height="162" fill="#a978ee"/>
+  <circle cx="210" cy="210" r="108" fill="#171319"/>
+  <circle cx="210" cy="210" r="70" fill="none" stroke="#efe7d7" stroke-width="3"/>
+  <circle cx="210" cy="210" r="10" fill="#e87662"/>
+  <path d="M444 74h292M444 104h214M444 134h248" fill="none" stroke="#171319" stroke-width="8"/>
+  <path d="M448 260l94 94M542 260l-94 94" fill="none" stroke="#efe7d7" stroke-width="8"/>
+  <path d="M644 258h82v82h-82z" fill="none" stroke="#a978ee" stroke-width="8"/>
+  <path d="M72 450v278M108 450v216M144 450v248" fill="none" stroke="#171319" stroke-width="7"/>
+  <path d="M260 460h278M260 494h180M260 528h238" fill="none" stroke="#a978ee" stroke-width="8"/>
+  <circle cx="305" cy="685" r="46" fill="#171319"/>
+  <path d="M450 654h278M450 692h178M450 730h230" fill="none" stroke="#171319" stroke-width="8"/>
+</svg>

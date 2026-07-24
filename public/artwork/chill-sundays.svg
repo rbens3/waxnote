@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img">
+  <title>Chill Sundays abstract cover</title>
+  <rect width="800" height="800" fill="#17211d"/>
+  <rect x="36" y="36" width="728" height="728" fill="#c9d7c7"/>
+  <path d="M36 520C152 448 220 454 302 500s154 54 226 0 136-88 236-52v316H36z" fill="#6da58a"/>
+  <path d="M36 620c114-70 220-62 310-6s178 52 262-2 126-58 156-36v188H36z" fill="#17211d"/>
+  <circle cx="588" cy="208" r="102" fill="#eee7d8"/>
+  <path d="M118 120c72 8 130 44 172 108M118 120c36 66 44 132 22 198M118 120c-2 88 24 142 82 194" fill="none" stroke="#17211d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M290 162c-62 8-106 32-132 74M266 244c-54 4-94 26-122 66" fill="none" stroke="#17211d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M474 104h222M474 136h156M474 168h188" fill="none" stroke="#6da58a" stroke-width="8"/>
+  <circle cx="170" cy="672" r="42" fill="#eee7d8"/>
+  <path d="M390 694h276" stroke="#c9d7c7" stroke-width="8"/>
+</svg>

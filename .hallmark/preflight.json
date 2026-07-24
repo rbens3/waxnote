@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-23",
+  "framework": "Vite 8 + React 19",
+  "font_stack_before": "System UI declared globally and repeated in inline styles",
+  "palette_before": "Mixed CSS variables, JavaScript constants, and inline hex values",
+  "motion": "CSS transitions only; no motion library",
+  "spacing": "Existing responsive CSS with mixed inline pixel spacing",
+  "design_system": "Editorial Music Intelligence"
+}

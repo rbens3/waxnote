@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img">
+  <title>Late Night Drive abstract cover</title>
+  <rect width="800" height="800" fill="#111823"/>
+  <rect x="36" y="36" width="728" height="728" fill="#17283c"/>
+  <circle cx="604" cy="178" r="86" fill="#dfe4dc"/>
+  <circle cx="632" cy="150" r="86" fill="#17283c"/>
+  <path d="M76 470C222 400 315 404 428 468S632 550 724 476" fill="none" stroke="#729cd5" stroke-width="52"/>
+  <path d="M78 470C226 414 326 426 428 482S622 548 722 488" fill="none" stroke="#101722" stroke-width="24"/>
+  <path d="M390 800L346 492h108L410 800z" fill="#dfe4dc"/>
+  <path d="M398 742l4-54M390 628l4-48M382 526l3-30" fill="none" stroke="#17283c" stroke-width="10"/>
+  <rect x="72" y="80" width="214" height="10" fill="#729cd5"/>
+  <rect x="72" y="112" width="146" height="10" fill="#dfe4dc"/>
+  <rect x="72" y="144" width="176" height="10" fill="#729cd5"/>
+  <path d="M92 260h278M92 294h198M92 328h236" fill="none" stroke="#2f5078" stroke-width="8"/>
+  <circle cx="130" cy="622" r="48" fill="none" stroke="#729cd5" stroke-width="8"/>
+  <circle cx="664" cy="654" r="28" fill="#729cd5"/>
+  <path d="M620 700h88" stroke="#dfe4dc" stroke-width="8"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img">
+  <title>Country Roads abstract cover</title>
+  <rect width="800" height="800" fill="#201813"/>
+  <rect x="36" y="36" width="728" height="728" fill="#d3a34c"/>
+  <circle cx="584" cy="210" r="112" fill="#efe5d1"/>
+  <path d="M36 398L214 292l154 82 144-122 252 172v340H36z" fill="#65472d"/>
+  <path d="M36 500l166-102 176 94 166-110 220 108v274H36z" fill="#30231a"/>
+  <path d="M358 800l-72-282 116-36 118 318z" fill="#efe5d1"/>
+  <path d="M403 782l-16-72M374 642l-13-62M350 534l-5-24" fill="none" stroke="#d3a34c" stroke-width="12"/>
+  <path d="M82 98h248M82 130h176M82 162h218" fill="none" stroke="#201813" stroke-width="8"/>
+  <rect x="604" y="562" width="96" height="108" fill="#d3a34c"/>
+  <path d="M582 562l70-66 70 66" fill="#efe5d1"/>
+  <path d="M102 650h132M102 682h86" fill="none" stroke="#d3a34c" stroke-width="8"/>
+</svg>

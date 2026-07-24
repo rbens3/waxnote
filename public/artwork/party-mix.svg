@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img">
+  <title>Party Mix abstract cover</title>
+  <rect width="800" height="800" fill="#1d121b"/>
+  <rect x="36" y="36" width="728" height="728" fill="#d9579c"/>
+  <g fill="#f1e5d4">
+    <rect x="36" y="36" width="182" height="182"/>
+    <rect x="400" y="36" width="182" height="182"/>
+    <rect x="218" y="218" width="182" height="182"/>
+    <rect x="582" y="218" width="182" height="182"/>
+    <rect x="36" y="400" width="182" height="182"/>
+    <rect x="400" y="400" width="182" height="182"/>
+    <rect x="218" y="582" width="182" height="182"/>
+    <rect x="582" y="582" width="182" height="182"/>
+  </g>
+  <circle cx="400" cy="400" r="206" fill="#1d121b"/>
+  <circle cx="400" cy="400" r="142" fill="#d9579c"/>
+  <circle cx="400" cy="400" r="72" fill="#f1e5d4"/>
+  <circle cx="400" cy="400" r="18" fill="#1d121b"/>
+  <path d="M400 194v110M400 496v110M194 400h110M496 400h110" stroke="#f1e5d4" stroke-width="12"/>
+  <path d="M80 650h104M80 686h72M616 92h104M648 128h72" stroke="#1d121b" stroke-width="10"/>
+  <circle cx="128" cy="128" r="30" fill="#d9579c"/>
+  <circle cx="672" cy="672" r="30" fill="#d9579c"/>
+</svg>
