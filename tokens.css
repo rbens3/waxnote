@@ -69,6 +69,9 @@
   --space-2xl: 4rem;
   --space-3xl: 6rem;
   --space-4xl: 9rem;
+  --space-section-before-compact: calc(var(--space-2xl) + var(--space-md));
+  --space-section-before: calc(var(--space-3xl) + var(--space-sm));
+  --space-section-before-wide: calc(var(--space-4xl) + var(--space-sm));
   --page-gutter: clamp(1rem, 4vw, 4rem);
   --content-max: 80rem;
   --control-height: 2.75rem;

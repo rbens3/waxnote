@@ -273,7 +273,7 @@ export function TabOverview({playlist}) {
       <dl className="overview-facts">
         <div><dt>Runtime</dt><dd>{runtime}</dd></div>
         <div><dt>Date range</dt><dd>{years}</dd></div>
-        <div><dt>Dominant genre</dt><dd>{dominantGenre.name} · {dominantShare}%</dd></div>
+        <div className="overview-fact--text"><dt>Dominant genre</dt><dd>{dominantGenre.name} · {dominantShare}%</dd></div>
         <div><dt>Explicit</dt><dd>{stats.Explicit}</dd></div>
         <div><dt>Avg popularity</dt><dd>{stats["Avg Popularity"]}</dd></div>
         <div><dt>Peak year</dt><dd>{stats["Peak Year"]}</dd></div>

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { LOGIN_FEATURES, PLAYLISTS } from "../data/mockData.js";
 
 const formatPlaylistFacts = (playlist) => {
@@ -37,6 +38,112 @@ function ArtworkContactSheet() {
         </figure>
       ))}
     </div>
+  );
+}
+
+function AboutWaxnote() {
+  const [isOpen,setIsOpen]=useState(false);
+  const dialogRef=useRef(null);
+  const headingRef=useRef(null);
+  const triggerRef=useRef(null);
+
+  useEffect(()=>{
+    const dialog=dialogRef.current;
+    if(!isOpen || !dialog) return undefined;
+
+    if(!dialog.open) dialog.showModal();
+    document.documentElement.classList.add("modal-open");
+    document.body.classList.add("modal-open");
+    const focusFrame=window.requestAnimationFrame(()=>{
+      headingRef.current?.focus({preventScroll:true});
+    });
+
+    return ()=>{
+      window.cancelAnimationFrame(focusFrame);
+      document.documentElement.classList.remove("modal-open");
+      document.body.classList.remove("modal-open");
+      if(dialog.open) dialog.close();
+    };
+  },[isOpen]);
+
+  const closeDialog=()=>setIsOpen(false);
+  const restoreTriggerFocus=()=>{
+    setIsOpen(false);
+    triggerRef.current?.focus({preventScroll:true});
+  };
+
+  return (
+    <>
+      <button
+        className="about-link"
+        type="button"
+        ref={triggerRef}
+        onClick={()=>setIsOpen(true)}
+      >
+        About Waxnote
+      </button>
+      <dialog
+        className="about-dialog"
+        ref={dialogRef}
+        aria-labelledby="about-waxnote-title"
+        onCancel={event=>{
+          event.preventDefault();
+          closeDialog();
+        }}
+        onKeyDown={event=>{
+          if(event.key==="Escape") {
+            event.preventDefault();
+            closeDialog();
+          }
+        }}
+        onClose={restoreTriggerFocus}
+        onClick={event=>{
+          if(event.target===event.currentTarget) closeDialog();
+        }}
+      >
+        <article className="about-dialog__panel">
+          <header className="about-dialog__header">
+            <h2 id="about-waxnote-title" ref={headingRef} tabIndex="-1">
+              About Waxnote
+            </h2>
+            <button className="about-dialog__close" type="button" onClick={closeDialog}>
+              Close
+            </button>
+          </header>
+
+          <div className="about-dialog__content">
+            <p>
+              Waxnote is a frontend product concept exploring richer ways to experience
+              music collections through editorial design and locally derived analytics.
+            </p>
+            <p>
+              It was originally conceived as a Spotify-powered application. During
+              development, platform limitations made many of the intended analytics
+              unavailable, leading to a pivot toward a privacy-friendly, frontend-only
+              experience powered by playlist exports.
+            </p>
+
+            <section aria-labelledby="about-built-with">
+              <h3 id="about-built-with">Built with</h3>
+              <ul>
+                <li>React</li>
+                <li>Vite</li>
+                <li>Recharts</li>
+                <li>CSS</li>
+              </ul>
+            </section>
+
+            <section aria-labelledby="about-data-source">
+              <h3 id="about-data-source">Data source</h3>
+              <p>
+                Spotify playlist CSV exports. All displayed insights are calculated
+                locally from the metadata contained in those files.
+              </p>
+            </section>
+          </div>
+        </article>
+      </dialog>
+    </>
   );
 }
 
@@ -82,6 +189,7 @@ export function EntryScreen({onFeatured,onBrowse}) {
             Browse example playlists
           </button>
           <p className="metadata">Six example playlists · all data is local</p>
+          <AboutWaxnote/>
         </div>
       </aside>
     </main>
