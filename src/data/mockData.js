@@ -166,9 +166,9 @@ export const LISTENING_PERIODS=[
 ];
 
 export const LOGIN_FEATURES=[
-  {i:"01",t:"Stats Spotify doesn't show you"},
-  {i:"02",t:"Your real listening habits"},
-  {i:"03",t:"Shareable Wrapped-style cards"},
+  {i:"01",t:"Editorial playlist intelligence"},
+  {i:"02",t:"Illustrative listening patterns"},
+  {i:"03",t:"Shareable Wrapped-style stories"},
 ];
 
 export const TABS=["Overview","Catalog","Audio","History","Wrapped"];

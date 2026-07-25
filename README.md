@@ -1,16 +1,35 @@
-# React + Vite
+# Waxnote
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Waxnote is a frontend concept exploring how playlist data could become an
+editorial music experience. This repository contains a polished, interactive
+React/Vite prototype built entirely with local mock data.
 
-Currently, two official plugins are available:
+## Prototype status
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Frontend-only React application
+- Built with Vite
+- Fully mocked playlists, analytics, listening history, and interface states
+- No backend or API requests
+- No external service or user credentials required
+- No environment variables, credentials, or secrets required
+- No live Spotify functionality
 
-## React Compiler
+The playlist picker, editorial dashboard, responsive layouts, and immersive
+Wrapped mode are demonstrations of product direction rather than connected
+services.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local development
 
-## Expanding the ESLint configuration
+Install dependencies and start the Vite development server:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm install
+npm run dev
+```
+
+Useful checks:
+
+```sh
+npm run lint
+npm run build
+```

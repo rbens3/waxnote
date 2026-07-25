@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { LOGIN_FEATURES, PLAYLISTS } from "../data/mockData.js";
 
 const formatPlaylistFacts = (playlist) => {
@@ -14,7 +13,7 @@ const formatPlaylistFacts = (playlist) => {
 function PublicationMark({context}) {
   return (
     <div className="publication-mark">
-      <span className="publication-mark__name">Playlist Pulse</span>
+      <span className="publication-mark__name">Waxnote</span>
       <span className="publication-mark__context metadata">{context}</span>
     </div>
   );
@@ -22,9 +21,9 @@ function PublicationMark({context}) {
 
 function ArtworkContactSheet() {
   return (
-    <div className="login-collage" aria-label="Abstract artwork from six playlist covers">
+    <div className="entry-collage" aria-label="Abstract artwork from six playlist covers">
       {PLAYLISTS.map((playlist,index)=>(
-        <figure className={`login-collage__item login-collage__item--${index + 1}`} key={playlist.id}>
+        <figure className={`entry-collage__item entry-collage__item--${index + 1}`} key={playlist.id}>
           <img
             src={playlist.artwork.src}
             alt={playlist.artwork.alt}
@@ -39,36 +38,26 @@ function ArtworkContactSheet() {
   );
 }
 
-export function LoginScreen({onLogin}) {
-  const [loading,setLoading]=useState(false);
-
-  const connect = () => {
-    setLoading(true);
-    setTimeout(()=>{
-      setLoading(false);
-      onLogin();
-    },1200);
-  };
-
+export function EntryScreen({onFeatured,onBrowse}) {
   return(
-    <main className="login-screen">
-      <section className="login-story" aria-labelledby="login-title">
+    <main className="entry-screen">
+      <section className="entry-story" aria-labelledby="entry-title">
         <PublicationMark context="Prototype edition · 2026"/>
-        <div className="login-story__copy">
-          <h1 id="login-title">Your playlists have a point of view.</h1>
-          <p>Read the shape, history, and character of the music you chose to keep.</p>
+        <div className="entry-story__copy">
+          <h1 id="entry-title">Your playlists have a point of view.</h1>
+          <p>A frontend concept exploring how playlist data could become an editorial music experience.</p>
         </div>
         <ArtworkContactSheet/>
       </section>
 
-      <aside className="login-connection" aria-labelledby="connection-title">
-        <div className="login-connection__intro">
-          <p className="login-connection__label metadata">Prototype connection</p>
-          <h2 id="connection-title">Open your listening archive.</h2>
-          <p>This preview uses local mock data. It does not contact Spotify, request account access, or store personal information.</p>
+      <aside className="entry-panel" aria-labelledby="entry-panel-title">
+        <div className="entry-panel__intro">
+          <p className="entry-panel__label metadata">Frontend concept</p>
+          <h2 id="entry-panel-title">Open the prototype.</h2>
+          <p>Everything here is illustrative: local mock playlists, modeled analytics, and simulated interactions.</p>
         </div>
 
-        <ol className="login-connection__features">
+        <ol className="entry-panel__features">
           {LOGIN_FEATURES.map(feature=>(
             <li key={feature.t}>
               <span className="metadata">{feature.i}</span>
@@ -77,11 +66,14 @@ export function LoginScreen({onLogin}) {
           ))}
         </ol>
 
-        <div className="login-connection__action">
-          <button className="login-connect" type="button" onClick={connect} disabled={loading}>
-            {loading ? "Opening prototype…" : "Connect with Spotify"}
+        <div className="entry-panel__actions">
+          <button className="entry-primary" type="button" onClick={onFeatured}>
+            Explore the featured playlist
           </button>
-          <p className="metadata">Mock connection · no authentication occurs</p>
+          <button className="entry-secondary" type="button" onClick={onBrowse}>
+            Browse example playlists
+          </button>
+          <p className="metadata">Six example playlists · all data is local</p>
         </div>
       </aside>
     </main>

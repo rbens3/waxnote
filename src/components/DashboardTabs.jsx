@@ -579,7 +579,7 @@ export function TabHistory({playlist}) {
       <header className="history-opening">
         <div className="history-opening__copy">
           <p className="history-mock-note metadata">
-            Mock listening history · Tracking since Jul 8 · Spotify history is not connected
+            Mock listening history · Tracking since Jul 8 · Illustrative data only
           </p>
           <h1>Friday at 11 PM is your power hour.</h1>
           <p>
@@ -862,13 +862,6 @@ export function TabWrapped({playlist,onExit}) {
             <span aria-hidden="true">←</span> Previous
           </button>
           <button
-            className="wrapped-share"
-            type="button"
-            aria-describedby="wrapped-share-note"
-          >
-            Share prototype <span aria-hidden="true">↗</span>
-          </button>
-          <button
             className="wrapped-control wrapped-control--next"
             type="button"
             disabled={chapter===cards.length - 1}
@@ -876,9 +869,6 @@ export function TabWrapped({playlist,onExit}) {
           >
             Next <span aria-hidden="true">→</span>
           </button>
-          <p className="visually-hidden" id="wrapped-share-note">
-            Image export is not connected in this prototype.
-          </p>
         </footer>
       </section>
     </article>

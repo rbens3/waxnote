@@ -11,7 +11,6 @@ export function Dashboard({playlist,onSwitch}) {
   const lastDashboardTab=useRef(0);
   const pendingTabFocus=useRef(null);
   const tabRefs=useRef([]);
-  const {trackCount,runtime,years}=playlist.analytics;
   const isWrapped=tab===4;
 
   useLayoutEffect(()=>{
@@ -60,7 +59,7 @@ export function Dashboard({playlist,onSwitch}) {
       {!isWrapped && (
         <header className="dashboard__header">
           <div className="dashboard__masthead">
-            <div className="dashboard__wordmark">Playlist Pulse</div>
+            <div className="dashboard__wordmark">Waxnote</div>
             <div className="dashboard__current">
               <span className="metadata">Current feature</span>
               <strong>{playlist.name}</strong>
@@ -108,38 +107,6 @@ export function Dashboard({playlist,onSwitch}) {
         {tab===3 && <TabHistory playlist={playlist}/>}
         {tab===4 && <TabWrapped playlist={playlist} onExit={exitWrapped}/>}
       </main>
-
-      {!isWrapped && (
-        <aside className="now-playing" aria-label="Playlist preview. Playback is not connected.">
-          <img
-            className="now-playing__art"
-            src={playlist.artwork.src}
-            alt=""
-            width="800"
-            height="800"
-          />
-          <div className="now-playing__track">
-            <span className="metadata">Playlist preview · not connected</span>
-            <strong>Runaway</strong>
-            <span>— Kanye West</span>
-          </div>
-          <div
-            className="now-playing__progress"
-            role="progressbar"
-            aria-label="Mock preview progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="67"
-          >
-            <span/>
-          </div>
-          <p className="now-playing__context">
-            From <strong>{playlist.name}</strong>
-            <span>Playback not connected</span>
-            <span>{trackCount.toLocaleString()} tracks · {runtime} · {years}</span>
-          </p>
-        </aside>
-      )}
     </div>
   );
 }
