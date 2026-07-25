@@ -96,7 +96,7 @@ function prepareGenreDNA(genres,trackCount) {
 
 function GenreDNA({genres,trackCount}) {
   const [activeGenre,setActiveGenre]=useState(null);
-  const dominantGenre=genres[0];
+  const dominantGenre=genres.find(genre=>genre.name!=="Unclassified") ?? genres[0];
   const dominantShare=Math.round((dominantGenre.value/trackCount)*100);
   const displayGenres=prepareGenreDNA(genres,trackCount);
   const genreColor=genre=>GENRE_COLORS[genre.name] ?? "var(--color-chart-light)";
@@ -206,16 +206,45 @@ function SonicVisualization({metrics}) {
 // ── Tabs content ──────────────────────────────────────────────────────────────
 
 export function TabOverview({playlist}) {
-  const {trackCount,runtime,years,genres,overviewStats}=playlist.analytics;
+  const {
+    trackCount,
+    runtime,
+    years,
+    genres,
+    overviewStats,
+    source,
+    growth=ADDED,
+    popularityBreakdown,
+  }=playlist.analytics;
   const stats=Object.fromEntries(overviewStats.map(stat=>[stat.l,stat.v]));
   const [firstYear,lastYear]=years.split("–").map(Number);
   const yearSpan=lastYear-firstYear;
-  const dominantGenre=genres[0];
+  const dominantGenre=genres.find(genre=>genre.name!=="Unclassified") ?? genres[0];
   const dominantShare=Math.round((dominantGenre.value/trackCount)*100);
+  const isImported=source==="csv";
   const timeCapsuleCopy=playlist.id===1
     ? <>From <strong>Twist and Shout (1963)</strong> to the newest 2026 additions, this playlist spans more history than most people’s record collections.</>
     : <>From {firstYear} to {lastYear}, this collection traces {yearSpan} years without losing its central point of view.</>;
-  const maxAdded=Math.max(...ADDED.map(point=>point.v));
+  const growthPoints=growth.length>24 ? growth.slice(-24) : growth;
+  const maxAdded=Math.max(...growthPoints.map(point=>point.v));
+  const peakAddition=growthPoints.find(point=>point.v===maxAdded);
+  const annotationPoint=isImported
+    ? peakAddition
+    : growthPoints.find(point=>point.d==="Jul 9");
+  const mainstreamPercentage=popularityBreakdown?.mainstreamPercentage ?? 72;
+  const undergroundPercentage=popularityBreakdown?.undergroundPercentage ?? 28;
+  const hiddenGemCopy=isImported
+    ? `${popularityBreakdown.undergroundCount} tracks score below 50 popularity; ${popularityBreakdown.mainstreamCount} score 70 or higher.`
+    : "You find the songs before they blow up. Baby Keem and Frank Ocean pull the underground side highest.";
+  const growthCopy=isImported
+    ? `${peakAddition.d} has the largest recorded addition, with ${peakAddition.v} tracks added.`
+    : "Jul 9 was the first major collection session—312 songs added in one day.";
+  const growthAxisStart=isImported ? growthPoints[0].date.slice(0,4) : "July";
+  const growthAxisEnd=isImported
+    ? growthPoints[0].date===growthPoints.at(-1).date
+      ? "Tracks added per day"
+      : growthPoints.at(-1).date.slice(0,4)
+    : "Songs added per day";
 
   return (
     <article className="overview-feature">
@@ -268,16 +297,22 @@ export function TabOverview({playlist}) {
       <section className="hidden-gem" aria-labelledby="hidden-gem-title">
         <header>
           <h2 id="hidden-gem-title">Hidden Gem Score</h2>
-          <p>You find the songs before they blow up. Baby Keem and Frank Ocean pull the underground side highest.</p>
+          <p>{hiddenGemCopy}</p>
         </header>
-        <div className="hidden-gem__comparison">
+        <div
+          className="hidden-gem__comparison"
+          style={isImported ? {
+            "--hidden-mainstream":`${Math.max(1,mainstreamPercentage)}fr`,
+            "--hidden-underground":`${Math.max(1,undergroundPercentage)}fr`,
+          } : undefined}
+        >
           <div className="hidden-gem__measure hidden-gem__measure--mainstream">
-            <strong>72%</strong>
+            <strong>{mainstreamPercentage}%</strong>
             <span>Mainstream</span>
             <small className="metadata">Popularity 70+</small>
           </div>
           <div className="hidden-gem__measure hidden-gem__measure--underground">
-            <strong>28%</strong>
+            <strong>{undergroundPercentage}%</strong>
             <span>Underground</span>
             <small className="metadata">Popularity under 50</small>
           </div>
@@ -288,18 +323,28 @@ export function TabOverview({playlist}) {
         <figcaption>
           <div>
             <h2>Playlist Growth</h2>
-            <p>Jul 9 was the first major collection session—312 songs added in one day.</p>
+            <p>{growthCopy}</p>
           </div>
-          <span className="growth-figure__annotation metadata">09 Jul · 312 tracks</span>
+          <span className="growth-figure__annotation metadata">
+            {isImported
+              ? `${annotationPoint.d} · ${annotationPoint.v} tracks`
+              : "09 Jul · 312 tracks"}
+          </span>
         </figcaption>
         <div className="growth-figure__chart">
-          <ol className="growth-figure__bars" aria-label="Songs added per day from July 8 through July 19">
-            {ADDED.map(point=>(
+          <ol
+            className="growth-figure__bars"
+            aria-label={isImported
+              ? `Tracks added over time from ${growthPoints[0].d} through ${growthPoints.at(-1).d}`
+              : "Songs added per day from July 8 through July 19"}
+            style={{"--growth-columns":growthPoints.length}}
+          >
+            {growthPoints.map(point=>(
               <li
-                data-annotated={point.d==="Jul 9"}
+                data-annotated={point===annotationPoint}
                 data-peak={point.v===maxAdded}
                 data-zero={point.v===0}
-                key={point.d}
+                key={point.date ?? point.d}
                 tabIndex="0"
                 aria-label={`${point.d}: ${point.v} songs added`}
                 title={`${point.d}: ${point.v} songs added`}
@@ -308,14 +353,14 @@ export function TabOverview({playlist}) {
                 <strong aria-hidden="true">{point.v}</strong>
                 <span className="growth-figure__bar" aria-hidden="true"><i/></span>
                 <span className="growth-figure__date" aria-hidden="true">
-                  {point.d.replace("Jul ","")}
+                  {isImported ? point.d : point.d.replace("Jul ","")}
                 </span>
               </li>
             ))}
           </ol>
           <div className="growth-figure__axis metadata">
-            <span>July</span>
-            <span>Songs added per day</span>
+            <span>{growthAxisStart}</span>
+            <span>{growthAxisEnd}</span>
           </div>
         </div>
       </figure>
@@ -329,7 +374,11 @@ export function TabCatalog({playlist}) {
   const [lead,...rest]=artists;
   const visibleArtists=showAll ? rest : rest.slice(0,4);
   const maxTracks=lead.v;
-  const namedLabels=LABELS.slice(0,8);
+  const isImported=playlist.analytics.source==="csv";
+  const namedLabels=(playlist.analytics.labels ?? LABELS).slice(0,8);
+  const topAlbums=playlist.analytics.topAlbums;
+  const collaborations=playlist.analytics.collaborations ?? COLLABS;
+  const maxAlbumTracks=topAlbums?.[0]?.v ?? 0;
 
   return (
     <article className="catalog-editorial">
@@ -386,30 +435,54 @@ export function TabCatalog({playlist}) {
       <div className="catalog-detail-spread">
         <section className="completion-index" aria-labelledby="completion-title">
           <header className="editorial-section-head">
-            <h2 id="completion-title">Album Completionist</h2>
-            <p>How much of each artist’s available catalogue appears here.</p>
+            <h2 id="completion-title">
+              {isImported ? "Albums in Rotation" : "Album Completionist"}
+            </h2>
+            <p>
+              {isImported
+                ? "The albums contributing the most tracks to this imported playlist."
+                : "How much of each artist’s available catalogue appears here."}
+            </p>
           </header>
           <div className="completion-index__list" role="list">
-          {COMPLETIONIST.map(x=>{
-            const pct=Math.round(x.have/x.total*100);
-            return(
-              <div className="completion-index__row" role="listitem" key={x.a}>
-                <strong>{x.a}</strong>
-                <span className="metadata">{x.have} of {x.total}</span>
-                <span className="completion-index__percent">{pct}%</span>
+          {isImported
+            ? topAlbums.map(album=>(
+              <div className="completion-index__row" role="listitem" key={`${album.a}-${album.artist}`}>
+                <strong>{album.a}</strong>
+                <span className="metadata">{album.artist}</span>
+                <span className="completion-index__percent">{album.v} tracks</span>
                 <div
                   className="completion-index__track"
                   role="progressbar"
-                  aria-label={`${x.a} album completion`}
+                  aria-label={`${album.a}: ${album.v} playlist tracks`}
                   aria-valuemin="0"
-                  aria-valuemax="100"
-                  aria-valuenow={pct}
+                  aria-valuemax={maxAlbumTracks}
+                  aria-valuenow={album.v}
                 >
-                  <span style={{width:`${pct}%`}}/>
+                  <span style={{width:`${(album.v/maxAlbumTracks)*100}%`}}/>
                 </div>
               </div>
-            );
-          })}
+            ))
+            : COMPLETIONIST.map(x=>{
+              const pct=Math.round(x.have/x.total*100);
+              return(
+                <div className="completion-index__row" role="listitem" key={x.a}>
+                  <strong>{x.a}</strong>
+                  <span className="metadata">{x.have} of {x.total}</span>
+                  <span className="completion-index__percent">{pct}%</span>
+                  <div
+                    className="completion-index__track"
+                    role="progressbar"
+                    aria-label={`${x.a} album completion`}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow={pct}
+                  >
+                    <span style={{width:`${pct}%`}}/>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -433,34 +506,49 @@ export function TabCatalog({playlist}) {
       <section className="collaboration-index" aria-labelledby="collaboration-title">
         <header className="editorial-section-head">
           <h2 id="collaboration-title">Collaboration Lines</h2>
-          <p>Repeated pairings reveal where the catalogue crosses between artists.</p>
+          <p>
+            {isImported
+              ? "Artist pairs appearing together on more than one exported track."
+              : "Repeated pairings reveal where the catalogue crosses between artists."}
+          </p>
         </header>
-        <ol>
-          {COLLABS.map((collaboration,index)=>(
-            <li key={`${collaboration.a}-${collaboration.b}`}>
-              <span className="collaboration-index__artist collaboration-index__artist--left">{collaboration.a}</span>
-              <span className="collaboration-index__bridge">
-                <i aria-hidden="true"/>
-                <strong>{collaboration.n} tracks</strong>
-              </span>
-              <span className="collaboration-index__artist collaboration-index__artist--right">{collaboration.b}</span>
-              <p>
-                {collaboration.n} shared tracks create {index<2
-                  ? "one of the playlist’s strongest bridges."
-                  : collaboration.n>=5
-                    ? "a recurring link across the catalogue."
-                    : "a smaller but persistent thread."}
-              </p>
-            </li>
-          ))}
-        </ol>
+        {collaborations.length ? (
+          <ol>
+            {collaborations.map((collaboration,index)=>(
+              <li key={`${collaboration.a}-${collaboration.b}`}>
+                <span className="collaboration-index__artist collaboration-index__artist--left">{collaboration.a}</span>
+                <span className="collaboration-index__bridge">
+                  <i aria-hidden="true"/>
+                  <strong>{collaboration.n} tracks</strong>
+                </span>
+                <span className="collaboration-index__artist collaboration-index__artist--right">{collaboration.b}</span>
+                <p>
+                  {collaboration.n} shared tracks create {index<2
+                    ? "one of the playlist’s strongest bridges."
+                    : collaboration.n>=5
+                      ? "a recurring link across the catalogue."
+                      : "a smaller but persistent thread."}
+                </p>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="catalog-empty">No artist pair appears together more than once in this export.</p>
+        )}
       </section>
     </article>
   );
 }
 
 export function TabAudio({playlist}) {
-  const dominantKey=keys.reduce((highest,key)=>key.v>highest.v?key:highest,keys[0]);
+  const auraMetrics=playlist.analytics.auraMetrics ?? AURA_METRICS;
+  const audioCharts=playlist.analytics.charts ?? charts;
+  const musicalKeys=playlist.analytics.keys ?? keys;
+  const audioByGenre=playlist.analytics.audioByGenre ?? radar;
+  const dominantKey=musicalKeys.reduce(
+    (highest,key)=>key.v>highest.v?key:highest,
+    musicalKeys[0],
+  );
 
   return(
     <article className="audio-editorial">
@@ -470,11 +558,11 @@ export function TabAudio({playlist}) {
           <p className="sonic-profile__statement">{playlist.sonicStatement}</p>
           <p className="metadata">{playlist.name} · {playlist.analytics.trackCount.toLocaleString()} tracks · {playlist.analytics.runtime}</p>
         </div>
-        <SonicVisualization metrics={AURA_METRICS}/>
+        <SonicVisualization metrics={auraMetrics}/>
       </header>
 
       <dl className="sonic-measures">
-        {AURA_METRICS.map(metric=>(
+        {auraMetrics.map(metric=>(
           <div key={metric.l} style={{"--sonic-value":metric.v}}>
             <dt>{metric.l}</dt>
             <dd>{metric.v}</dd>
@@ -489,7 +577,7 @@ export function TabAudio({playlist}) {
           <p>Each figure names the dominant band directly. Neutral measures show the field; the playlist accent marks the peak.</p>
         </header>
         <div className="distribution-index">
-          {charts.map(({t,d})=>{
+          {audioCharts.map(({t,d})=>{
             const max=Math.max(...d.map(point=>point.v));
             const peak=d.find(point=>point.v===max);
             return(
@@ -523,7 +611,7 @@ export function TabAudio({playlist}) {
           <p><strong>{dominantKey.k}</strong> is the dominant key, appearing in {dominantKey.v} songs.</p>
         </header>
         <ul>
-          {keys.map(key=>(
+          {musicalKeys.map(key=>(
             <li data-dominant={key.k===dominantKey.k} key={key.k}>
               <strong>{key.k}</strong>
               <span className="metadata">{key.v}</span>
@@ -538,7 +626,7 @@ export function TabAudio({playlist}) {
           <p>Aligned measures make the differences readable without a legend. Every value is scored out of 100.</p>
         </header>
         <div className="genre-bands__list">
-          {radar.map(genre=>(
+          {audioByGenre.map(genre=>(
             <article className="genre-band" key={genre.g}>
               <h3>{genre.g}</h3>
               {["Dance","Energy","Mood","Acoustic"].map(metric=>(
@@ -574,6 +662,27 @@ const FIXATION_NAMES = {
 };
 
 export function TabHistory({playlist}) {
+  if(playlist.analytics.historyAvailable===false) {
+    return (
+      <article className="history-editorial history-unavailable">
+        <header className="history-unavailable__heading">
+          <p className="metadata">Export boundaries</p>
+          <h1>Playback history unavailable</h1>
+        </header>
+        <div className="history-unavailable__body">
+          <p>
+            Spotify playlist exports contain track metadata but not listening history,
+            skips, sessions, or play counts.
+          </p>
+          <p>
+            Waxnote intentionally derives insights only from information available in
+            exported playlist data.
+          </p>
+        </div>
+      </article>
+    );
+  }
+
   return(
     <article className="history-editorial">
       <header className="history-opening">

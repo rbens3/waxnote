@@ -29,12 +29,16 @@ export default function App() {
   } else if(screen==="pick") {
     content=<PlaylistPicker onPick={openPlaylist}/>;
   } else {
-    content=<Dashboard playlist={playlist} onSwitch={()=>setScreen("pick")}/>;
+    content=<Dashboard key={playlist.id} playlist={playlist} onSwitch={()=>setScreen("pick")}/>;
   }
 
   return (
     <div className="app-shell">
-      <p className="prototype-notice">Interactive prototype · Uses mock data</p>
+      <aside className="prototype-notice" aria-label="Concept disclosure">
+        <strong>Interactive concept</strong>
+        <span>Built from real playlist exports and locally derived analytics.</span>
+        <span>No Spotify account required.</span>
+      </aside>
       {content}
     </div>
   );

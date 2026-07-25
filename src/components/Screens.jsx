@@ -1,7 +1,9 @@
 import { LOGIN_FEATURES, PLAYLISTS } from "../data/mockData.js";
 
 const formatPlaylistFacts = (playlist) => {
-  const dominantGenre = playlist.analytics.genres[0]?.name ?? "Mixed";
+  const dominantGenre = playlist.analytics.genres.find(
+    genre=>genre.name!=="Unclassified",
+  )?.name ?? "Mixed";
   return [
     {label:"Tracks",value:playlist.analytics.trackCount.toLocaleString()},
     {label:"Runtime",value:playlist.analytics.runtime},
@@ -44,17 +46,23 @@ export function EntryScreen({onFeatured,onBrowse}) {
       <section className="entry-story" aria-labelledby="entry-title">
         <PublicationMark context="Prototype edition · 2026"/>
         <div className="entry-story__copy">
-          <h1 id="entry-title">Your playlists have a point of view.</h1>
-          <p>A frontend concept exploring how playlist data could become an editorial music experience.</p>
+          <h1 id="entry-title">Rediscover your playlists.</h1>
+          <p>
+            Waxnote is an interactive concept exploring richer ways to experience music
+            collections through thoughtful design and locally derived analytics.
+          </p>
         </div>
         <ArtworkContactSheet/>
       </section>
 
       <aside className="entry-panel" aria-labelledby="entry-panel-title">
         <div className="entry-panel__intro">
-          <p className="entry-panel__label metadata">Frontend concept</p>
-          <h2 id="entry-panel-title">Open the prototype.</h2>
-          <p>Everything here is illustrative: local mock playlists, modeled analytics, and simulated interactions.</p>
+          <p className="entry-panel__label metadata">Inside Waxnote</p>
+          <h2 id="entry-panel-title">Read the collection.</h2>
+          <p>
+            Six music collections become editorial reports, with each available figure
+            calculated locally from playlist data.
+          </p>
         </div>
 
         <ol className="entry-panel__features">

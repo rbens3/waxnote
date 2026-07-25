@@ -1,4 +1,5 @@
 import { C } from "../theme.js";
+import { IMPORTED_PLAYLISTS } from "./importedPlaylists.js";
 
 export const TOTAL=1218;
 export const genres=[
@@ -166,85 +167,12 @@ export const LISTENING_PERIODS=[
 ];
 
 export const LOGIN_FEATURES=[
-  {i:"01",t:"Editorial playlist intelligence"},
-  {i:"02",t:"Illustrative listening patterns"},
-  {i:"03",t:"Shareable Wrapped-style stories"},
+  {i:"01",t:"Locally derived catalogue insights"},
+  {i:"02",t:"Release and audio patterns"},
+  {i:"03",t:"Editorial playlist stories"},
 ];
 
 export const TABS=["Overview","Catalog","Audio","History","Wrapped"];
-
-const makeOverviewStats = ({tracks,runtime,decades,explicit,popularity,peakYear}) => [
-  {l:"Songs",v:tracks.toLocaleString(),c:C.purple},{l:"Runtime",v:runtime,c:C.emerald},
-  {l:"Decades",v:String(decades),c:C.amber},{l:"Explicit",v:explicit,c:C.rose},
-  {l:"Avg Popularity",v:String(popularity),c:C.blue},{l:"Peak Year",v:String(peakYear),c:C.pink},
-];
-
-const makeWrapped = ({name,tracks,runtime,topArtist,topArtistTracks,trait,personality,caption}) => ({
-  personality:{
-    type:personality,
-    desc:`${name} is a focused collection of ${tracks.toLocaleString()} songs shaped around ${trait.toLowerCase()}.`,
-    traits:[`${tracks.toLocaleString()} song collection`,trait,`${topArtist} leads the playlist`,"Purpose-built curation"],
-    compare:`Core artists include: ${topArtist} · ${caption}`,
-  },
-  cards:[
-    {
-      id:1,stat:tracks.toLocaleString(),label:"songs in this playlist",
-      sub:`${runtime} of music`,
-      caption:`${name} keeps every track focused on the same mood.`,
-    },
-    {
-      id:2,stat:runtime,label:"is the full running time",
-      sub:`${tracks.toLocaleString()} songs in sequence`,
-      caption:`Long enough to establish a mood without losing the thread.`,
-    },
-    {
-      id:3,stat:topArtist,label:"is your most-collected artist",
-      sub:`${topArtistTracks} tracks in this playlist`,
-      caption:`${topArtist} defines the center of this mix.`,
-    },
-    {
-      id:4,stat:String(topArtistTracks),label:`${topArtist} tracks hold the center`,
-      sub:trait,
-      caption:`The leading catalogue gives ${name} its clearest recurring voice.`,
-    },
-    {
-      id:5,stat:personality,label:"is this playlist's personality",
-      sub:trait,
-      caption,
-    },
-    {
-      id:6,stat:trait,label:"is the playlist’s point of view",
-      sub:`A six-chapter portrait of ${name}`,
-      caption:`${topArtist} · ${caption}`,
-    },
-  ],
-});
-
-const lateNightWrapped=makeWrapped({
-  name:"Late Night Drive",tracks:84,runtime:"5.3 hrs",topArtist:"Frank Ocean",topArtistTracks:9,
-  trait:"Low-light, reflective sequencing",personality:"The Night Rider",
-  caption:"The Weeknd · Joji · SZA",
-});
-const gymWrapped=makeWrapped({
-  name:"Gym Hits",tracks:57,runtime:"3.1 hrs",topArtist:"Travis Scott",topArtistTracks:8,
-  trait:"High-energy training fuel",personality:"The Motivator",
-  caption:"Future · Kanye West · Lil Baby",
-});
-const chillWrapped=makeWrapped({
-  name:"Chill Sundays",tracks:103,runtime:"6.4 hrs",topArtist:"Bon Iver",topArtistTracks:11,
-  trait:"Acoustic, unhurried listening",personality:"The Slow Curator",
-  caption:"Hozier · Phoebe Bridgers · Noah Kahan",
-});
-const countryWrapped=makeWrapped({
-  name:"Country Roads",tracks:62,runtime:"3.7 hrs",topArtist:"Morgan Wallen",topArtistTracks:12,
-  trait:"Modern country with roots",personality:"The Roadtripper",
-  caption:"Zach Bryan · Tyler Childers · Luke Combs",
-});
-const partyWrapped=makeWrapped({
-  name:"Party Mix",tracks:91,runtime:"5.0 hrs",topArtist:"Dua Lipa",topArtistTracks:9,
-  trait:"Dance-floor momentum",personality:"The Spark",
-  caption:"Calvin Harris · Doja Cat · The Weeknd",
-});
 
 export const PLAYLISTS=[
   {
@@ -258,122 +186,9 @@ export const PLAYLISTS=[
     },
     analytics:{
       trackCount:TOTAL,runtime:"76.7 hrs",years:"1963–2026",genres,topArtists:artists,
-      overviewStats:OVERVIEW_STATS,wrapped:{personality:PERSONALITY,cards:WRAPPED_CARDS},
+      overviewStats:OVERVIEW_STATS,historyAvailable:false,
+      wrapped:{personality:PERSONALITY,cards:WRAPPED_CARDS},
     },
   },
-  {
-    id:2,name:"Late Night Drive",accent:"var(--color-accent-night)",desc:"Slow and dark",
-    thesis:"After-hours R&B and rap, sequenced for the long way home.",
-    sonicStatement:"Low-lit R&B and rap move slowly, with a reflective center and electric edges.",
-    artwork:{
-      src:"/artwork/late-night-drive.svg",
-      alt:"Abstract midnight-blue cover with a pale road cutting through geometric forms",
-      caption:"Cover study 02 · after midnight",
-    },
-    analytics:{
-      trackCount:84,runtime:"5.3 hrs",years:"2007–2026",
-      genres:[
-        {name:"R&B / Soul",value:31},{name:"Rap / Hip-Hop",value:24},
-        {name:"Pop",value:17},{name:"Rock / Indie",value:12},
-      ],
-      topArtists:[
-        {name:"Joji",v:4},{name:"SZA",v:5},{name:"The Weeknd",v:6},
-        {name:"Drake",v:7},{name:"Frank Ocean",v:9},
-      ],
-      overviewStats:makeOverviewStats({tracks:84,runtime:"5.3 hrs",decades:3,explicit:"46%",popularity:68,peakYear:2018}),
-      wrapped:lateNightWrapped,
-    },
-  },
-  {
-    id:3,name:"Gym Hits",accent:"var(--color-accent-gym)",desc:"High energy only",
-    thesis:"Hard drums and high-impact hooks, with no room for dead air.",
-    sonicStatement:"Hard drums, sharp hooks, and high energy keep every transition moving forward.",
-    artwork:{
-      src:"/artwork/gym-hits.svg",
-      alt:"Abstract red and black cover built from weights, bars, and sharp diagonal forms",
-      caption:"Cover study 03 · full intensity",
-    },
-    analytics:{
-      trackCount:57,runtime:"3.1 hrs",years:"2011–2026",
-      genres:[
-        {name:"Rap / Hip-Hop",value:32},{name:"EDM / Electronic",value:11},
-        {name:"Rock / Indie",value:8},{name:"Pop",value:6},
-      ],
-      topArtists:[
-        {name:"Kanye West",v:4},{name:"Lil Baby",v:5},{name:"Future",v:6},
-        {name:"Eminem",v:6},{name:"Travis Scott",v:8},
-      ],
-      overviewStats:makeOverviewStats({tracks:57,runtime:"3.1 hrs",decades:2,explicit:"68%",popularity:79,peakYear:2020}),
-      wrapped:gymWrapped,
-    },
-  },
-  {
-    id:4,name:"Chill Sundays",accent:"var(--color-accent-chill)",desc:"Low tempo",
-    thesis:"Acoustic warmth and slow-blooming songs for an unhurried day.",
-    sonicStatement:"Acoustic warmth, low-tempo pacing, and soft dynamics hold the room open.",
-    artwork:{
-      src:"/artwork/chill-sundays.svg",
-      alt:"Abstract sage and cream cover with soft organic shapes and quiet linework",
-      caption:"Cover study 04 · Sunday, unhurried",
-    },
-    analytics:{
-      trackCount:103,runtime:"6.4 hrs",years:"1994–2026",
-      genres:[
-        {name:"Folk",value:34},{name:"Rock / Indie",value:29},
-        {name:"R&B / Soul",value:21},{name:"Pop",value:19},
-      ],
-      topArtists:[
-        {name:"Noah Kahan",v:5},{name:"Phoebe Bridgers",v:6},{name:"Hozier",v:8},
-        {name:"Frank Ocean",v:9},{name:"Bon Iver",v:11},
-      ],
-      overviewStats:makeOverviewStats({tracks:103,runtime:"6.4 hrs",decades:4,explicit:"18%",popularity:61,peakYear:2019}),
-      wrapped:chillWrapped,
-    },
-  },
-  {
-    id:5,name:"Country Roads",accent:"var(--color-accent-country)",desc:"Wallen, Zach, Childers",
-    thesis:"Modern country cut with road songs, roots, and open sky.",
-    sonicStatement:"Modern country leads with open-road momentum, warm acoustics, and direct voices.",
-    artwork:{
-      src:"/artwork/country-roads.svg",
-      alt:"Abstract ochre landscape cover with a low sun and a road crossing dark fields",
-      caption:"Cover study 05 · open road",
-    },
-    analytics:{
-      trackCount:62,runtime:"3.7 hrs",years:"1990–2026",
-      genres:[
-        {name:"Country",value:49},{name:"Folk",value:7},
-        {name:"Rock / Indie",value:4},{name:"Pop",value:2},
-      ],
-      topArtists:[
-        {name:"Chris Stapleton",v:4},{name:"Luke Combs",v:5},{name:"Tyler Childers",v:7},
-        {name:"Zach Bryan",v:10},{name:"Morgan Wallen",v:12},
-      ],
-      overviewStats:makeOverviewStats({tracks:62,runtime:"3.7 hrs",decades:4,explicit:"23%",popularity:73,peakYear:2023}),
-      wrapped:countryWrapped,
-    },
-  },
-  {
-    id:6,name:"Party Mix",accent:"var(--color-accent-party)",desc:"High BPM",
-    thesis:"Pop and electronic momentum, built to keep the room moving.",
-    sonicStatement:"Bright pop and electronic pulse keep the mix rhythmic, fast, and communal.",
-    artwork:{
-      src:"/artwork/party-mix.svg",
-      alt:"Abstract magenta and cream cover with a rhythmic checkerboard and circular forms",
-      caption:"Cover study 06 · room in motion",
-    },
-    analytics:{
-      trackCount:91,runtime:"5.0 hrs",years:"2005–2026",
-      genres:[
-        {name:"Pop",value:38},{name:"EDM / Electronic",value:27},
-        {name:"Rap / Hip-Hop",value:18},{name:"Latin",value:8},
-      ],
-      topArtists:[
-        {name:"Doja Cat",v:5},{name:"The Weeknd",v:6},{name:"David Guetta",v:7},
-        {name:"Calvin Harris",v:8},{name:"Dua Lipa",v:9},
-      ],
-      overviewStats:makeOverviewStats({tracks:91,runtime:"5.0 hrs",decades:3,explicit:"41%",popularity:82,peakYear:2022}),
-      wrapped:partyWrapped,
-    },
-  },
+  ...IMPORTED_PLAYLISTS,
 ];
