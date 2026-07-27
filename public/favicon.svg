@@ -1,14 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <title>Waxnote</title>
-  <rect width="64" height="64" rx="12" fill="#211e1a"/>
-  <circle cx="32" cy="32" r="23" fill="none" stroke="#eee8dc" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Waxnote</title>
+  <rect width="64" height="64" fill="#0d0c0a"/>
   <path
-    d="M15 18l8 29 9-19 9 19 8-29"
+    d="M18 53a22 22 0 0 1 0-42"
     fill="none"
-    stroke="#eee8dc"
+    stroke="#f3ede2"
+    stroke-linecap="round"
+    stroke-width="4"
+  />
+  <path
+    d="M17 17l9 31 7-21 7 21 9-31"
+    fill="none"
+    stroke="#f3ede2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    stroke-width="5"
+    stroke-width="7"
   />
-  <circle cx="32" cy="32" r="4.5" fill="#b38ae8"/>
+  <circle cx="13" cy="32" r="4.5" fill="#d87968"/>
 </svg>
