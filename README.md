@@ -33,3 +33,11 @@ Useful checks:
 npm run lint
 npm run build
 ```
+
+## Source use
+
+© 2026 Bennett Speir. All rights reserved in the original code and other original copyrightable material.
+
+This repository is publicly viewable for inspection and portfolio review. No general license is granted to reuse, modify, redistribute, or commercialize the original code without prior written permission.
+
+This notice does not limit rights granted under GitHub’s Terms of Service, applicable law, or third-party licenses. Third-party materials remain subject to their respective terms.
