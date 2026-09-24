@@ -1,81 +1,54 @@
 # Waxnote
 
-Waxnote is a frontend concept exploring how playlist data could become an
-editorial music experience. This repository contains an interactive React/Vite
-prototype built around six of Bennett Speir’s Spotify playlists. All six
-playlists were created by Bennett and exist on his Spotify account.
+Waxnote is an interactive React/Vite concept that presents music collections
+as editorial playlist reports. It combines saved playlist exports with a
+predefined featured collection, without connecting to a live Spotify account.
+
+[Live prototype](https://waxnote.bennettspeir.com/) ·
+[Case study](https://www.bennettspeir.com/waxnote.html)
 
 ## Prototype status
 
 - Frontend-only React application built with Vite
-- Five included playlist CSVs parsed and summarized in the browser
-- One featured playlist report with summaries, chart values, and Wrapped content stored in source
-- No live Spotify requests, user-account connections, or audio-recording analysis
-- No application backend, environment variables, or user credentials required
-- Playback history is unavailable for all six included collections
+- Six included playlist reports with Overview, Catalog, Audio, and Wrapped views
+- Saved CSV data and predefined report values, as described below
+- No backend or live Spotify API integration
+- No environment variables, credentials, or secrets required
 
-The playlist picker, editorial dashboard, responsive layouts, and Wrapped mode
-present the included collections. They do not connect to a visitor's music
-account. The interface identifies the application as an interactive concept and
-the collections as examples. Page assets still load normally, and the stylesheet
-requests fonts from Google Fonts.
+The playlist picker, editorial dashboard, responsive layouts, and immersive
+Wrapped mode demonstrate the product direction using the included collections.
 
-## Included data
+## Data and provenance
 
-`src/data/importedPlaylists.js` imports these saved files from
-`src/data/imports/`:
+### Imported playlist reports
 
-| Collection | CSV file | Playlist entries |
-| --- | --- | ---: |
-| Late Night Drive | `Late_Night_Drive.csv` | 69 |
-| Chill Vibes | `Chill_vibes.csv` | 57 |
-| Dirt Road Driving | `Dirt_Road_Driving.csv` | 142 |
-| Pregaming | `Pregaming.csv` | 109 |
-| Gym Pump | `Gym_Pump.csv` | 56 |
+Late Night Drive, Chill Vibes, Dirt Road Driving, Pregaming, and Gym Pump
+come from five saved CSV exports in [src/data/imports](./src/data/imports/).
+[importedPlaylists.js](./src/data/importedPlaylists.js) parses those files and
+calculates playlist summaries in the browser, including runtime, artist and
+genre counts, release patterns, and audio-feature distributions.
 
-These five files contain 433 playlist entries and 410 distinct Track URI values
-across the files. A track can occur in more than one collection. Entry totals
-are not a count of unique recordings.
+The exports already contain audio-feature values such as energy, danceability,
+acousticness, valence, tempo, and key. Waxnote summarizes those saved values;
+it does not fetch them live or calculate them from audio recordings.
+The imported Wrapped profiles are rule-based editorial interpretations of
+the exported fields.
 
-The CSVs already contain track names, artists, albums, release dates, durations,
-popularity, explicit flags, playlist-addition dates, genres, and labels. They
-also contain saved audio-feature values, including energy, danceability,
-valence, tempo, key, and acousticness. The prototype uses these saved values; it
-does not retrieve them from Spotify or measure them from audio recordings.
+### Featured collection
 
-For these imported collections, the browser calculates entry counts and runtime,
-artist and album rankings, genre and label summaries, release patterns,
-collaboration counts, additions by date, popularity summaries, musical-key
-counts, and audio-feature averages and distributions. Broad genre groups and
-Wrapped profile labels use rules defined in the application. Playlist-addition
-dates describe changes to the playlist, not listening activity.
+The featured **This Is Bennett** report uses predefined summaries, chart
+values, and Wrapped content stored in [mockData.js](./src/data/mockData.js).
+Its displayed count of 1,218 tracks is a stored value, not a count calculated
+from the five imported CSVs. A matching track-level export for this featured
+collection is not included in the repository, so its stored figures cannot
+be independently recomputed from the bundled data.
 
-`src/data/mockData.js` supplies report data for Bennett’s featured **This Is Bennett** playlist. Its
-1,218-track display count, catalogue summaries, chart inputs, and Wrapped text
-are predefined in source. Components calculate some presentation ratios from
-those values, but this report is not rebuilt from the five CSVs. The repository does
-not document how every stored statistic was originally derived. Adding its
-displayed count to the five CSV entry counts produces
-1,651, but that is not a verified unique-track total or a CSV-only total.
+### Playback history
 
-## Rendered data flow
-
-`src/App.jsx` and `src/components/Screens.jsx` select entries from `PLAYLISTS` in
-`src/data/mockData.js`. That list combines the featured playlist’s report data
-with `IMPORTED_PLAYLISTS`. `src/components/Dashboard.jsx` passes the selected
-collection to the views in `src/components/DashboardTabs.jsx`.
-
-The imported collections provide their calculated Overview, Catalog, Audio, and
-Wrapped values. The featured collection supplies predefined values directly or
-uses the predefined fallbacks in those views. All six set
-`historyAvailable: false`, so History renders an unavailable-data explanation.
-The older illustrative listening-history code is not shown for any included
-collection.
-
-Some existing interface descriptions still describe all insights as calculated
-from exports. That wording is broader than the mixed data flow described here.
-This documentation correction does not change the interface, datasets, or
-calculations.
+All six included collections mark playback history as unavailable.
+The History view displays that limitation instead of presenting the legacy
+mock listening-history structures as actual activity. Playlist-added dates
+in the imported reports describe collection growth, not when tracks were played.
 
 ## Local development
 
